@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/bbc_news_menu"
+            android:icon="@mipmap/left_icon"
+            android:title="@string/bbcnews_menu"/>
+        <item android:id="@+id/ted_menu"
+            android:icon="@mipmap/left_icon"
+            android:title="@string/ted_menu"/>
+        <item android:id="@+id/daily_sentence_menu"
+            android:title="@string/daily_sentence_menu"
+            android:icon="@mipmap/left_icon"/>
+    </group>
+
+    <item android:title="@string/other_menu">
+        <menu>
+            <item android:id="@+id/feedback_menu"
+                android:title="@string/feedback_menu"
+                android:checkable="true"
+                android:icon="@mipmap/left_icon"/>
+            <item android:id="@+id/setting_menu"
+                android:icon="@mipmap/left_icon"
+                android:checkable="true"
+                android:title="@string/setting_menu"/>
+            <item android:id="@+id/exit_menu"
+                android:title="@string/exit_menu"
+                android:checkable="true"
+                android:icon="@mipmap/left_icon"/>
+        </menu>
+    </item>
+</menu>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardview_dailysentence"
+    android:layout_width="match_parent"
+    android:layout_height="540dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:clickable="true"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_margin="@dimen/margin_top_large"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_header_cardview_daily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today"
+            android:layout_marginBottom="5dp"
+            android:layout_gravity="start"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/title_textsize"/>
+        <ImageView
+            android:id="@+id/iv_cardview_daily"
+            android:layout_width="280dp"
+            android:layout_height="180dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/test"/>
+
+        <TextView
+            android:id="@+id/tv_en_cardview_dailysentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_top_large"
+            android:textSize="@dimen/daily_setense_textsize"/>
+
+        <TextView
+            android:id="@+id/tv_author_cardview_daily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="end"
+            android:textSize="@dimen/daily_setense_textsize"/>
+        <TextView
+            android:id="@+id/tv_ch_cardview_dailysentence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_top_large"
+            android:textSize="@dimen/daily_setense_textsize" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_authordescrip_cardview_daily"
+            android:textSize="@dimen/daily_setense_textsize"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.project.zmant.bbcnews">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
+        android:name=".view.DApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.NoTitle">
+        <activity android:name=".view.activity.GuidePageActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.activity.MainActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity android:name=".view.activity.TedActivity"/>
+        <activity android:name=".view.activity.DailySentenceActivity"/>
+        <activity android:name=".view.activity.BBCNewsDetailActivity"/>
+        <activity android:name=".view.activity.TedDetailActivity"/>
+    </application>
+
+</manifest>
