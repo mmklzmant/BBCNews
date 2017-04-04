@@ -49,7 +49,7 @@ public class GuidePageActivity extends AppCompatActivity {
 
     //开始主activity
     private void startMainActivity() {
-        Timer time = new Timer();
+        /*Timer time = new Timer();
         TimerTask tk = new TimerTask() {
             Intent intent = new Intent(GuidePageActivity.this,MainActivity.class);
             @Override
@@ -57,7 +57,10 @@ public class GuidePageActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        };time.schedule(tk, 1000);
-
+        };time.schedule(tk, 50);
+*/
+        Intent intent = new Intent(GuidePageActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

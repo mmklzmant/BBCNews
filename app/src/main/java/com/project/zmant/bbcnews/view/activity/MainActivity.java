@@ -154,6 +154,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected String getToolBarTitle() {
-        return "";
+        return "BBCNews";
     }
 }
