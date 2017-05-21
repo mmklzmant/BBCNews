@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 
 public interface ITedView {
-    void showData(ArrayList<TedCardViewBean> datas);
-    void showFailure(String error);
+    void showData(ArrayList<TedCardViewBean> datas, int flag);
     void showProgress(boolean show);
 }

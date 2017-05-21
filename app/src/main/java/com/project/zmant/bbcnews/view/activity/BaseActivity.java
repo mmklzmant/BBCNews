@@ -18,7 +18,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.project.zmant.bbcnews.R;
+import com.project.zmant.bbcnews.utils.ACache;
 import com.project.zmant.bbcnews.utils.ActivityManager;
+import com.project.zmant.bbcnews.view.view.FeedBackDialog;
+import com.project.zmant.bbcnews.view.view.LeftMenuCommonDialog;
 
 import butterknife.ButterKnife;
 
@@ -30,8 +33,6 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
-
-
     Toolbar toolbar;
     ActionBarDrawerToggle drawerToggle;
     private static boolean isExit = false;//判断是否退出的变量
@@ -58,16 +59,18 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme_NoTitle);
         initViews();
         ButterKnife.bind(this);
-        ActivityManager.addActivity(this);
-        mNavView = getNav();
         setupComponent();
         initToolbar();
         initData();
         initListeners();
+        mNavView = getNav();
         setNavListener();
         drawerToggle = getDrawerToggle();
+        ActivityManager.addActivity(this);
+
     }
 
 
@@ -76,27 +79,28 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                getDrawer().closeDrawer(GravityCompat.START);
                 switch(item.getItemId())
                 {
                     case R.id.bbc_news_menu:
                         startActivity(new Intent(getCurrentActivity(),
                                 MainActivity.class));
+                        getDrawer().closeDrawer(GravityCompat.START);
                         break;
                     case R.id.ted_menu:
                         startActivity(new Intent(getCurrentActivity(),
                                 TedActivity.class));
+                        getDrawer().closeDrawer(GravityCompat.START);
                         break;
                     case R.id.daily_sentence_menu:
                         startActivity(new Intent(getCurrentActivity(),
                                 DailySentenceActivity.class));
+                        getDrawer().closeDrawer(GravityCompat.START);
                         break;
                     case R.id.feedback_menu:
-
-                        break;
-                    case R.id.setting_menu:
+                        alertFeedback();
                         break;
                     case R.id.exit_menu:
+                        alertExit();
                         break;
                     default:
                         break;
@@ -104,6 +108,35 @@ public abstract class BaseActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+
+    private void alertFeedback() {
+        final FeedBackDialog dialog = new FeedBackDialog(this);
+        dialog.initUI("Email To:mmklzmant@163.com,Thank you!","OK");
+        dialog.setOnDialogClickListener(new FeedBackDialog.onClickDialogListener() {
+            @Override
+            public void onClickOkButton() {
+                dialog.closeDialog();
+            }
+        });
+        dialog.showDialog();
+    }
+
+    private void alertExit() {
+        final LeftMenuCommonDialog dialog = new LeftMenuCommonDialog(this);
+        dialog.initUI("Is Exit？", "Yes", "No");
+        dialog.setOnDialogClickListener(new LeftMenuCommonDialog.onClickDialogListener() {
+            @Override
+            public void onClickLeftButton() {
+                ActivityManager.finish();
+            }
+
+            @Override
+            public void onClickRightButton() {
+                dialog.closeDialog();
+            }
+        });
+        dialog.showDialog();
     }
 
     private void initToolbar() {

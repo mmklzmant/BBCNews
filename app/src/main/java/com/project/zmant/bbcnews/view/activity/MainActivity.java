@@ -63,7 +63,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     void initData() {
-
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(mToggle);
         mViewPager.setOffscreenPageLimit(5);
@@ -101,7 +100,7 @@ public class MainActivity extends BaseActivity {
     /**
      * 初始化TabLayout
      */
-    private void initTabLayout() {
+        private void initTabLayout() {
         initTabBeans();
         mMainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager(), this, mBBCTabBeen);
         mViewPager.setAdapter(mMainViewPagerAdapter);
@@ -115,10 +114,6 @@ public class MainActivity extends BaseActivity {
      */
     public void initTabBeans() {
         mBBCTabBeen = new ArrayList<>();
-        if(fragmentWorld == null)
-        {
-            Log.i("null", "fragmentworld is null");
-        }
         mBBCTabBeen.add(new BBCTabBean("World", fragmentWorld));
         mBBCTabBeen.add(new BBCTabBean("Asia", fragmentAsia));
         mBBCTabBeen.add(new BBCTabBean("China", fragmentChina));
@@ -129,7 +124,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     void initListeners() {
-
     }
 
     @Override

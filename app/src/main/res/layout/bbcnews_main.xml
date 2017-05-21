@@ -22,14 +22,13 @@
                 android:background="@color/colorPrimary"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-            </android.support.v7.widget.Toolbar>
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tablayout_main"
                 android:layout_width="match_parent"
-                android:background="@android:color/white"
                 android:layout_height="40dp"
+                android:background="@android:color/white"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabSelectedTextColor="@color/colorPrimary"
                 app:tabTextAppearance="@style/TabTextApperance"
@@ -54,6 +53,41 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <!--<LinearLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_shadow"
+            app:layout_behavior="@string/bottom_sheet_behavior">
+
+            <ImageButton
+                android:id="@+id/ib_mainpage"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:src="@mipmap/tab_main_ib_b" />
+
+            <ImageButton
+                android:id="@+id/ib_top"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:src="@mipmap/tab_news_ib" />
+
+            <ImageButton
+                android:id="@+id/ib_more"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/transparent"
+                android:src="@mipmap/tab_dis_ib" />
+        </LinearLayout>-->
 
     </android.support.design.widget.CoordinatorLayout>
 

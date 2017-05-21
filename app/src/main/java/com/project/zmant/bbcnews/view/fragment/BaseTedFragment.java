@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.project.zmant.bbcnews.R;
 import com.project.zmant.bbcnews.bean.TedCardViewBean;
 import com.project.zmant.bbcnews.component.AppTedComponent;
+import com.project.zmant.bbcnews.utils.ACache;
 import com.project.zmant.bbcnews.view.DApplication;
 import com.project.zmant.bbcnews.view.adapter.TedCardViewAdapter;
 import com.project.zmant.bbcnews.view.iviews.ITedView;
@@ -30,16 +32,17 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseTedFragment extends Fragment implements ITedView {
-    private Context context;
+    Context context;
     private int layoutId;
     private View rootView;
     private RecyclerView mRecycleView;
     private SwipeRefreshLayout mRefresh;
-    private TedCardViewAdapter mCardViewAdapter;
+    TedCardViewAdapter mCardViewAdapter;
     ArrayList<TedCardViewBean> mDatas;
     ArrayList<TedCardViewBean> items;
     ArrayList<TedCardViewBean> loads;
     int count;
+    ACache mACache;
 
     public boolean isPrepared = false;
     public boolean isVisible = false;
@@ -48,6 +51,7 @@ public abstract class BaseTedFragment extends Fragment implements ITedView {
     {
         this.context = context;
         this.layoutId = layoutId;
+        mACache = ACache.get(context);
     }
 
     @Override
@@ -70,52 +74,6 @@ public abstract class BaseTedFragment extends Fragment implements ITedView {
     }
 
     protected abstract void initRefresh();
-    private void initLoadMore() {
-
-        mRecycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int lastVisibleItem;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE &&
-                        lastVisibleItem+1 == mCardViewAdapter.getItemCount())
-                {
-                    count++;
-                    if(count >= 2)
-                    {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mCardViewAdapter.changeMoreStatus(mCardViewAdapter.NO_LOAD_MORE);
-                                mRecycleView.scrollToPosition(mDatas.size()-4);
-                                Toast.makeText(context, "没有了...", Toast.LENGTH_SHORT).show();
-                                mCardViewAdapter.changeMoreStatus(mCardViewAdapter.PULLUP_LOAD_MORE);
-                            }
-                        },2000);
-
-                    }
-                    else {
-                        mCardViewAdapter.changeMoreStatus(mCardViewAdapter.LOADING_MORE);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mCardViewAdapter.AddFooterItem(loads);
-                                mCardViewAdapter.changeMoreStatus(mCardViewAdapter.PULLUP_LOAD_MORE);
-                            }
-                        }, 2000);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                lastVisibleItem = manager.findLastVisibleItemPosition();
-            }
-        });
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -133,15 +91,23 @@ public abstract class BaseTedFragment extends Fragment implements ITedView {
     abstract protected SwipeRefreshLayout getRefreshView(View rootView);
     protected abstract void setupFragmentComponent(AppTedComponent appTedComponent);
     protected abstract void initData();
+    protected abstract  void initLoadMore();
+    protected abstract void setCount();
+    protected abstract void storeData(ArrayList<TedCardViewBean> datas);
 
     @Override
-    public void showData(ArrayList<TedCardViewBean> datas) {
+    public void showData(ArrayList<TedCardViewBean> datas, int flag) {
         mDatas = datas;
         mCardViewAdapter = new TedCardViewAdapter(context, getHalfDatas(datas));
         LinearLayoutManager manager = new LinearLayoutManager(context);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecycleView.setLayoutManager(manager);
         mRecycleView.setAdapter(mCardViewAdapter);
+        setCount();
+        if(flag == 0)
+        {
+            storeData(datas);
+        }
     }
 
     protected ArrayList<TedCardViewBean> getHalfDatas(ArrayList<TedCardViewBean> datas) {
@@ -159,11 +125,6 @@ public abstract class BaseTedFragment extends Fragment implements ITedView {
             }
         }
         return items;
-    }
-
-    @Override
-    public void showFailure(String error) {
-
     }
 
     @Override

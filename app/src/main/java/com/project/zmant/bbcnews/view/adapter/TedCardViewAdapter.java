@@ -85,7 +85,11 @@ public class TedCardViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if(holder instanceof DataViewHolder)
         {
             DataViewHolder dataViewHolder = (DataViewHolder) holder;
-            Picasso.with(context).load(mDatas.get(position).getImgurl()).into(dataViewHolder.imgView);
+            Picasso.with(context).load(mDatas.get(position)
+                                  .getImgurl())
+                                  .error(R.mipmap.ted_error)
+                                  .placeholder(R.mipmap.ted_error)
+                                  .into(dataViewHolder.imgView);
             dataViewHolder.tvTitle.setText(mDatas.get(position).getTitle());
             dataViewHolder.tvSpeaker.setText(mDatas.get(position).getSpeaker());
             dataViewHolder.tvDescip.setText("(" + mDatas.get(position).getDescription() + ")");

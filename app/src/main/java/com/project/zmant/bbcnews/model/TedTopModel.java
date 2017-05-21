@@ -1,5 +1,7 @@
 package com.project.zmant.bbcnews.model;
 
+import android.util.Log;
+
 import com.project.zmant.bbcnews.api.ApiService;
 import com.project.zmant.bbcnews.bean.TedCardViewBean;
 import com.project.zmant.bbcnews.presenter.TedTopPresenter;
@@ -90,8 +92,8 @@ public class TedTopModel {
                 bean.setTitle(obj.get("title").toString());
                 bean.setImgurl(obj.get("thumb").toString());
                 bean.setUrl(obj.get("url").toString());
-                bean.setSpeaker(obj.get("speaker").toString());
-                bean.setDescription(obj.get("speaker_description").toString());
+                bean.setSpeaker("Speaker");
+                bean.setDescription("Description");
             } catch (JSONException e) {
                 e.printStackTrace();
             }

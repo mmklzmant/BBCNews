@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 
 public interface IBBCWorldView{
-    void showData(ArrayList<BBCCardViewBean> datas);
+    void showData(ArrayList<BBCCardViewBean> datas, int flag);
     void showProgress();
     void hideProgress();
 }

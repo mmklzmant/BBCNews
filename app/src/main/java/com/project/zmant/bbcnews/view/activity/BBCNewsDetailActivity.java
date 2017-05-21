@@ -6,6 +6,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -175,7 +176,8 @@ public class BBCNewsDetailActivity extends BaseActivity implements IBBCDetailVie
         mIntroTV.setText(detail.get(0));
         mDetailTV.setText(detail.get(1));
         Picasso.with(this).load(imgurls.get(0))
-            .error(R.mipmap.test)
+            .error(R.mipmap.bbcnews_error)
+            .placeholder(R.mipmap.bbcnews_error)
             .into(mOneImgView);
         if (imgurls.size() < 2) {
             String result = "";
@@ -191,7 +193,10 @@ public class BBCNewsDetailActivity extends BaseActivity implements IBBCDetailVie
             for (int i = 1; i < imgurls.size(); i++) {
                 index = i;
                 ImageView iv = new ImageView(this);
-                Picasso.with(this).load(imgurls.get(i)).into(iv);
+                Picasso.with(this).load(imgurls.get(i))
+                        .placeholder(R.mipmap.bbcnews_error)
+                        .error(R.mipmap.bbcnews_error)
+                        .into(iv);
                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         DensityUtil.dip2px(this, 220));
                 iv.setLayoutParams(lp);

@@ -4,5 +4,10 @@
     <color name="colorPrimaryDark">#d2366b</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="theme_color">#ffffff</color>			<!-- 纯白色 -->
+    <color name="line_color">#ededed</color>            <!-- 浅灰色 -->
+    <color name="transparent">#00000000</color>
+    <color name="tv_title_color">#444444</color>
+
     <color name="light_gray">#cbc9c9</color>
 </resources>

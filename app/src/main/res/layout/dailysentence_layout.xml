@@ -24,6 +24,18 @@
 
         </android.support.design.widget.AppBarLayout>
 
+         <android.support.design.widget.FloatingActionButton
+             android:id="@+id/floatbtn_daily"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="end|bottom"
+             android:clickable="true"
+             android:layout_margin="32dp"
+             android:src="@mipmap/home_icon"
+             app:borderWidth="0dp"
+             app:pressedTranslationZ="10dp"
+             app:rippleColor="?attr/colorPrimaryDark" />
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/refresh_dailysentence"
             android:layout_width="match_parent"

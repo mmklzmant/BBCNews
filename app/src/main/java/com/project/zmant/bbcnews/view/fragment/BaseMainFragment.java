@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.project.zmant.bbcnews.R;
 import com.project.zmant.bbcnews.bean.BBCCardViewBean;
 import com.project.zmant.bbcnews.component.AppComponent;
+import com.project.zmant.bbcnews.utils.ACache;
 import com.project.zmant.bbcnews.view.DApplication;
 import com.project.zmant.bbcnews.view.adapter.BBCNewsCardViewAdapter;
 import com.project.zmant.bbcnews.view.iviews.IBBCWorldView;
@@ -32,14 +34,15 @@ import butterknife.ButterKnife;
 
 public abstract class BaseMainFragment extends Fragment implements IBBCWorldView {
     private int layoutId;
-    private Context context;
+    Context context;
     private SwipeRefreshLayout mRefresh;
     private RecyclerView mRecycle;
     BBCNewsCardViewAdapter mCardViewAdapter;
     ArrayList<BBCCardViewBean> mDatas;
     ArrayList<BBCCardViewBean> items;
     ArrayList<BBCCardViewBean> loads;
-    int count;
+
+    ACache mACache;
 
     public boolean isPrepared = false;
     public boolean isVisible = false;
@@ -48,6 +51,7 @@ public abstract class BaseMainFragment extends Fragment implements IBBCWorldView
     {
         this.context = context;
         this.layoutId = layoutId;
+        mACache = ACache.get(context);
     }
 
     @Nullable
@@ -81,13 +85,18 @@ public abstract class BaseMainFragment extends Fragment implements IBBCWorldView
 
 
     @Override
-    public void showData(ArrayList<BBCCardViewBean> datas) {
+    public void showData(ArrayList<BBCCardViewBean> datas, int flag) {
         mDatas = datas;
         mCardViewAdapter = new BBCNewsCardViewAdapter(context, getHalfDatas(datas));
         LinearLayoutManager manager = new LinearLayoutManager(context);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecycle.setLayoutManager(manager);
         mRecycle.setAdapter(mCardViewAdapter);
+        setCount();
+        if(flag == 0)
+        {
+            storeData(datas);
+        }
     }
 
     protected ArrayList<BBCCardViewBean> getHalfDatas(ArrayList<BBCCardViewBean> datas) {
@@ -106,58 +115,11 @@ public abstract class BaseMainFragment extends Fragment implements IBBCWorldView
         }
         return items;
     }
-
     protected void setListener() {
         initRefresh();
         initLoadMore();
     }
 
-    private void initLoadMore() {
-
-        mRecycle.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int lastVisibleItem;
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE &&
-                        lastVisibleItem+1 == mCardViewAdapter.getItemCount())
-                {
-                    count++;
-                    if(count >= 2)
-                    {
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                mCardViewAdapter.changeMoreStatus(mCardViewAdapter.NO_LOAD_MORE);
-                                mRecycle.scrollToPosition(mDatas.size()-4);
-                                Toast.makeText(context, "没有了...", Toast.LENGTH_SHORT).show();
-                                mCardViewAdapter.changeMoreStatus(mCardViewAdapter.PULLUP_LOAD_MORE);
-                            }
-                        },2000);
-
-                    }
-                    else {
-                            mCardViewAdapter.changeMoreStatus(mCardViewAdapter.LOADING_MORE);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mCardViewAdapter.AddFooterItem(loads);
-                                    mCardViewAdapter.changeMoreStatus(mCardViewAdapter.PULLUP_LOAD_MORE);
-                                }
-                            }, 2000);
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                lastVisibleItem = manager.findLastVisibleItemPosition();
-            }
-        });
-    }
     protected abstract void initRefresh();
 
     @Override
@@ -174,4 +136,7 @@ public abstract class BaseMainFragment extends Fragment implements IBBCWorldView
     protected abstract RecyclerView getRecycle();
     protected abstract void setupFragmentComponent(AppComponent appComponent);
     protected abstract void initData();
+    protected abstract void storeData(ArrayList<BBCCardViewBean> datas);
+    protected abstract  void initLoadMore();
+    protected abstract void setCount();
 }

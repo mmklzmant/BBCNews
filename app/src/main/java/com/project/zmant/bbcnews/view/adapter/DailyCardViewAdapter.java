@@ -90,7 +90,10 @@ public class DailyCardViewAdapter
         {
             DataViewHolder dataViewHolder = (DataViewHolder) holder;
             dataViewHolder.tvHeader.setText(changeText(datas.get(position).getHeader()));
-            Picasso.with(context).load(datas.get(position).getImgurl()).into(dataViewHolder.imageView);
+            Picasso.with(context).load(datas.get(position).getImgurl())
+                    .placeholder(R.mipmap.daily_error)
+                    .error(R.mipmap.daily_error)
+                    .into(dataViewHolder.imageView);
             dataViewHolder.tvEnglish.setText(datas.get(position).getEnText());
             dataViewHolder.tvAuthor.setText(datas.get(position).getAuthor());
             dataViewHolder.tvChinese.setText(changeText(datas.get(position).getChText()));

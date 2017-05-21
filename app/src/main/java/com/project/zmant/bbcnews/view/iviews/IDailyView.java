@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 
 public interface IDailyView {
-    void showData(ArrayList<DailyCardViewBean> datas);
-    void showFailure(String error);
+    void showData(ArrayList<DailyCardViewBean> datas, int flag);
     void showProgress(boolean show);
 }

@@ -1,5 +1,7 @@
 package com.project.zmant.bbcnews.view.activity;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.project.zmant.bbcnews.R;
 import com.project.zmant.bbcnews.api.ApiService;
@@ -16,9 +19,14 @@ import com.project.zmant.bbcnews.bean.DailyCardViewBean;
 import com.project.zmant.bbcnews.component.DaggerDailyComponent;
 import com.project.zmant.bbcnews.module.DailyModule;
 import com.project.zmant.bbcnews.presenter.DailyPresenter;
+import com.project.zmant.bbcnews.utils.ACache;
 import com.project.zmant.bbcnews.view.DApplication;
 import com.project.zmant.bbcnews.view.adapter.DailyCardViewAdapter;
 import com.project.zmant.bbcnews.view.iviews.IDailyView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -35,21 +43,23 @@ import butterknife.BindView;
 public class DailySentenceActivity extends BaseActivity implements IDailyView {
     @BindView(R.id.drawlayout_dailysentence)
     DrawerLayout mDrawerLayout;
+    ACache mACache;
 
     @Override
     protected DrawerLayout getDrawer() {
         return mDrawerLayout;
     }
-
+    @BindView(R.id.floatbtn_daily)
+    FloatingActionButton mFloatBtn;
     @BindView(R.id.toolbar_dailysentence)
     Toolbar mToolbar;
     @BindView(R.id.nav_dailysentence)
     NavigationView mNav;
     @BindView(R.id.recycleview_dailysentence)
-
     RecyclerView mRecycleView;
     @BindView(R.id.refresh_dailysentence)
     SwipeRefreshLayout mRefresh;
+
     DailyCardViewAdapter mCardViewAdapter;
     ArrayList<DailyCardViewBean> mDatas;
     int position = 0; //显示的item下标\
@@ -65,6 +75,7 @@ public class DailySentenceActivity extends BaseActivity implements IDailyView {
     @Override
     void initViews() {
         setContentView(R.layout.dailysentence_layout);
+        mACache = ACache.get(this);
     }
 
     @Override
@@ -73,7 +84,7 @@ public class DailySentenceActivity extends BaseActivity implements IDailyView {
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(mToggle);
-        mPresenter.loadData(apiService, "");
+        mPresenter.loadData(apiService, "", this);
     }
 
     @Override
@@ -89,6 +100,13 @@ public class DailySentenceActivity extends BaseActivity implements IDailyView {
     void initListeners() {
         initFrontRefresh();
         initLaterRefresh();
+        mFloatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DailySentenceActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initFrontRefresh() {
@@ -176,18 +194,41 @@ public class DailySentenceActivity extends BaseActivity implements IDailyView {
     }
 
     @Override
-    public void showData(ArrayList<DailyCardViewBean> datas) {
+    public void showData(ArrayList<DailyCardViewBean> datas, int flag) {
         mDatas = datas;
         mCardViewAdapter = new DailyCardViewAdapter(this, datas);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecycleView.setLayoutManager(manager);
         mRecycleView.setAdapter(mCardViewAdapter);
+        if(flag == 0)
+        {
+            storeData();
+        }
     }
 
-    @Override
-    public void showFailure(String error) {
-
+    private void storeData()
+    {
+        DailyCardViewBean bean = null;
+        JSONArray array = new JSONArray();
+        JSONObject obj = null;
+        for (int i = 0; i < mDatas.size(); i++)
+        {
+            bean = mDatas.get(i);
+            obj = new JSONObject();
+            try {
+                obj.put("auther", bean.getAuthor());
+                obj.put("chText", bean.getChText());
+                obj.put("descrip", bean.getDescip());
+                obj.put("enText", bean.getEnText());
+                obj.put("header", bean.getHeader());
+                obj.put("imgurl", bean.getImgurl());
+                array.put(i, obj);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        mACache.put("daily", array);
     }
 
     @Override

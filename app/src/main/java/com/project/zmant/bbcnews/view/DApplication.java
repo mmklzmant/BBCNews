@@ -13,6 +13,7 @@ import com.project.zmant.bbcnews.module.ApiServiceBBCModule;
 import com.project.zmant.bbcnews.module.ApiServiceDailyModule;
 import com.project.zmant.bbcnews.module.ApiServiceTedModule;
 import com.project.zmant.bbcnews.module.AppModule;
+import com.project.zmant.bbcnews.utils.ACache;
 
 /**
  * @author zmant 2016/12/11 17:55

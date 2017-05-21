@@ -10,6 +10,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -99,6 +100,17 @@ public class BBCBussinessModel {
     {
         ArrayList<BBCCardViewBean> datas = new ArrayList<>();
         BBCCardViewBean bean = null;
+        ArrayList<String> imgDefault = new ArrayList<>();
+        imgDefault.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1494846006&di=f1088021f716a933308835b2ffce6afc&imgtype=jpg&er=1&src=http%3A%2F%2Fpic.nipic.com%2F2007-08-21%2F2007821124026613_2.jpg");
+        imgDefault.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=630653865,2740863255&fm=23&gp=0.jpg");
+        imgDefault.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2265519592,731791488&fm=23&gp=0.jpg");
+        imgDefault.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3240912424,2385240317&fm=23&gp=0.jpg");
+        imgDefault.add("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2713827905,1228041340&fm=23&gp=0.jpg");
+        imgDefault.add("https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3458162692,2552778156&fm=23&gp=0.jpg");
+        imgDefault.add("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1986476753,574547812&fm=23&gp=0.jpg");
+        imgDefault.add("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1746184382,3986665368&fm=23&gp=0.jpg");
+        imgDefault.add("https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=2134132690,3296283335&fm=23&gp=0.jpg");
+        Random random = new Random();
         for(int i = 0; (i < titles.size() - 10); i++)
         {
             bean = new BBCCardViewBean();
@@ -107,7 +119,7 @@ public class BBCBussinessModel {
             bean.setLocation(locations.get(i));
             if(i > 2 && i < 12)
             {
-                bean.setImagUrl("http://img5.imgtn.bdimg.com/it/u=2977696489,3197788028&fm=21&gp=0.jpg");
+                bean.setImagUrl(imgDefault.get(random.nextInt(9)));
             }
             else if(i <= 2)
             {
@@ -130,6 +142,10 @@ public class BBCBussinessModel {
                 {
                     bean.setTime(times.get(i-1));
                 }
+            }
+            if(bean.getLocation().equals(""))
+            {
+                bean.setLocation("Bussiness");
             }
             datas.add(bean);
         }

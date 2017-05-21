@@ -1,5 +1,7 @@
 package com.project.zmant.bbcnews.view.activity;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -8,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.project.zmant.bbcnews.R;
 import com.project.zmant.bbcnews.bean.TedTabBean;
@@ -33,6 +36,8 @@ public class TedActivity extends BaseActivity {
     DrawerLayout mDrawerLayout;
     @BindView(R.id.nav_ted)
     NavigationView mNav;
+    @BindView(R.id.floatbtn_ted)
+    FloatingActionButton mFloatBtn;
 
     @BindView(R.id.viewpater_ted)
     ViewPager mViewPager;
@@ -79,7 +84,13 @@ public class TedActivity extends BaseActivity {
 
     @Override
     void initListeners() {
-
+        mFloatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TedActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

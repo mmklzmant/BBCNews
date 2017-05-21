@@ -43,4 +43,20 @@
         <item name="android:taskToBackExitAnimation">@null</item>
 
     </style>
+
+    <!-- 自定义loading dialog -->
+    <style name="commondialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launcher_background</item>
+        <item name="colorPrimaryDark">@android:color/black</item>
+    </style>
 </resources>

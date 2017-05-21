@@ -87,7 +87,11 @@ public class BBCNewsCardViewAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         if(holder instanceof DataViewHolder)
         {
             DataViewHolder dataViewHolder = (DataViewHolder)holder;
-            Picasso.with(context).load(mDatas.get(position).getImagUrl()).into(dataViewHolder.imageView);
+            Picasso.with(context).load(mDatas.get(position)
+                                .getImagUrl())
+                                .placeholder(R.mipmap.bbcnews_error)
+                                .error(R.mipmap.bbcnews_error)
+                                .into(dataViewHolder.imageView);
             dataViewHolder.titleTV.setText(mDatas.get(position).getTitle());
             dataViewHolder.timeTV.setText(mDatas.get(position).getTime());
             dataViewHolder.locationTV.setText(mDatas.get(position).getLocation());
